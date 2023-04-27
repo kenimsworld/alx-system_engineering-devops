@@ -2,7 +2,4 @@
 
 # This script prints a string of characters 10 times
 
-for _ in {1..10} ;
-do
-	echo "Best School"
-done
+for _ in {0..9}; do echo "Best School"; done
