@@ -2,7 +2,7 @@
 
 # This script prints a string of characters 10 times
 
-for string in {1..10} ;
+for _ in {1..10} ;
 do
 	echo "Best School"
 done
