@@ -1,0 +1,24 @@
+Link to whiteboarded infrastructure design:
+https://imgur.com/NhNx7Vi
+
+Explanation to some specifics about the web infrastructure:
+1. Server: A server is a computer or a software that can process requests and deliver data to another computer or software over a network.
+
+2. Role of a domain name: A domain name is a unique string of text that identifies a specific resource on the internet, such as a website or an email service. It helps users find the resource easily instead of using its numerical IP address.
+
+3. The type of DNS record www is in www.foobar.com: CNAME
+
+4. The role of the web server: The main job of a web server is to display website content through storing, processing and delivering webpages to users.
+
+5. The role of the application server: Application servers facilitate communication and transfer of resources between application databases and web clients
+
+6. The role of the database: The role of a database is to store and manage data in an organized way so that it can be easily accessed, managed, and updated.
+
+7. What is the server using to communicate with the computer of the user requesting the website: Through the HTTP protocol
+
+ISSUES ASSOCIATED WITH:
+A. SPOF (single point of failure): the biggest issue to SPOF system is that, if it fails, it will stop the entire system from working.
+
+B. Downtime when maintenance needed (like deploying new code web server needs to be restarted): The downtime period might be longer than expected because the server is dependent on one code base which at the moment, is not available. Users will therefore, not be able to access the website and its contents which results in a bad user experience and loss of traffic.
+
+C. Cannot scale if too much incoming traffic: The domain name points directly at the server hence doesn't contain a load balancer which allows handling increased loads easier. This poses an issue to the volume of users trying to access the website's content and can lead to poor user experience.
