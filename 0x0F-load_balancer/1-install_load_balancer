@@ -1,10 +1,38 @@
 #!/usr/bin/env bash
-# This script configures Haproxy load balancer in a server.
+# Installs, configures, and starts the load balancer
+# Update package lists
+sudo apt-get update
 
-sudo apt-get -y update
-sudo apt-get install -y haproxy
-frontend_configuration="frontend http\n\tbind *:80\n\tmode http\n\tdefault_backend juan-web-backend\n"
-backend_configuration="backend juan-web-backend\n\tbalance roundrobin\n\tmode http\n\tserver 214845-web-01 54.160.79.1 check\n\tserver 214845-web-02 100.25.15.86 check"
-sudo sed -i "20i \\\n$frontend_configuration\n$backend_configuration" /etc/haproxy/haproxy.cfg
-sudo service haproxy restart
+# Install HAProxy
+sudo apt-get install haproxy -y
 
+# Configure HAProxy
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOT
+global
+    daemon
+    maxconn 256
+
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+frontend http_front
+    bind *:80
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server 214845-web-01 54.160.79.1:80 check
+    server 214845-web-02 100.25.15.86:80 check
+EOT
+
+# Test HAProxy configuration
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+
+# Start HAProxy
+sudo systemctl start haproxy
+
+# Enable HAProxy to start on boot
+sudo systemctl enable haproxy
